@@ -32,7 +32,7 @@
                         <!-- Left Side Of Navbar -->
                         <ul class="navbar-nav me-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">{{ __('Projects') }}</a>
+                                <a class="nav-link" href="{{route('admin.projects.index')}}">{{ __('Projects') }}</a>
                             </li>
                         </ul>
 
@@ -72,7 +72,7 @@
                     </div>
                 </div>
             </nav>
-            <main class="">
+            <main class="my-4">
                 @yield('content')
             </main>
         </div>

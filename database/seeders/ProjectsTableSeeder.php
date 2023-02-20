@@ -29,7 +29,7 @@ class ProjectsTableSeeder extends Seeder
 
         for ($i=0; $i < 20 ; $i++) { 
             $newProject = new Project();
-            $newProject->name = $faker->name();
+            $newProject->name = $faker->sentence(3);
             $newProject->slug = Str::slug($newProject->name);
             $newProject->publication_date = $faker->date('Y-m-d', 'now');
             $newProject->preview = $faker->image(null, 360, 360, 'animals', true, true, 'cats', true, 'jpg');
