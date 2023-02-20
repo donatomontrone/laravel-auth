@@ -32,7 +32,7 @@ class ProjectsTableSeeder extends Seeder
             $newProject->name = $faker->sentence(3);
             $newProject->slug = Str::slug($newProject->name);
             $newProject->publication_date = $faker->date('Y-m-d', 'now');
-            $newProject->preview = $faker->image(null, 360, 360, 'animals', true, true, 'cats', true, 'jpg');
+            $newProject->preview = $faker->imageUrl(360, 360, 'animals', true, 'dogs', true, 'jpg');
             $newProject->complexity = $faker->numberBetween(1,5);
             $newProject->language_used = $faker->randomElement(['HTML', 'HTML/CSS', 'JS', 'Vue.Js', 'Php', 'Laravel']);
             $newProject->github_url = $faker->url();
