@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class ProjectController extends Controller
 {
@@ -14,7 +15,7 @@ class ProjectController extends Controller
         'publication_date' => 'required',
         'preview' => 'required|url|min:10',
         'complexity' => 'required|min:1|max:5',
-        'language_used' => 'required|min:3|max:100|string',
+        'language_used' => 'required|min:2|max:100|string',
         'github_url' => 'required|url|min:10',
     ];
 
@@ -76,7 +77,7 @@ class ProjectController extends Controller
         $newProject->fill($data);
         $newProject->save();
 
-        return redirect()->route('admin.projects.show', $newProject->id );
+        return redirect()->route('admin.projects.show', $newProject->id)->with('info-message' , "'$newProject->name' was created successfully!")->with('alert', 'success');
     }
 
     /**
@@ -93,25 +94,32 @@ class ProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Project $project
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Project $project)
     {
-        //
+        return view('admin.projects.edit', compact('project'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Project $project
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Project $project)
     {
-        //
-    }
+        $newRules = $this->rules;
+        $newRules['name'] = ['required', 'string', 'min:3', 'max:100', Rule::unique('projects')->ignore($project->id)];
+
+        $data = $request->validate($newRules, $this->messages);
+
+        $project->update($data);
+    
+            return redirect()->route('admin.projects.show', compact('project'))->with('info-message' , "'$project->name' was updated successfully!")->with('alert', 'success');
+        }
 
     /**
      * Remove the specified resource from storage.
