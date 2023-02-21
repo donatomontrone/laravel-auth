@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController as DashboardController;
 use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
+use App\Http\Controllers\Guest\ProjectController as GuestProjectController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,8 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
+
+Route::get('/index', [GuestProjectController::class, 'index'])->name('guests.index');
 
 //Qui posso inserire tutte le rotte solo per gli utenti che sono autenticati e verificati
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group( function(){

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 @section('title', 'Portfolio | Index')
 
 @section('content')
@@ -21,7 +21,7 @@
                 <th scope="row">{{$project->id}}</th>
                 <td>{{$project->name}}</td>
                 <td>{{$project->publication_date}}</td>
-                <td>
+                <td class="text-secondary">
                   @for ($i = 0; $i < 5; $i++)
                   <span class="fa-star {{($i < $project->complexity) ? 'fas' : 'far'}}"></span>
                   @endfor
@@ -42,6 +42,9 @@
               @endforelse
             </tbody>
           </table>
+          <div>
+            {{$projects->links()}}
+          </div>
     </div>
 </div>
 @endsection

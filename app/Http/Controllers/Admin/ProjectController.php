@@ -33,7 +33,7 @@ class ProjectController extends Controller
         'language_used.required' => 'Inserisci il linguaggio di programmazione usato.',     
         'language_used.min' => 'Il linguaggio è troppo corto.',
         'language_used.max' => 'Il linguaggio è troppo lungo.',
-        'github_url.require' => 'Inserisci l\'url della repository GitHub.',
+        'github_url.required' => 'Inserisci l\'url della repository GitHub.',
         'github_url.url' => 'Url non valido.',
     ];
     
@@ -46,7 +46,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::all();
+        $projects = Project::paginate(10);
         return view('admin.projects.index', compact('projects'));
     }
 
@@ -68,7 +68,6 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-
         $data = $request->validate(
         $this->rules, $this->messages
         );

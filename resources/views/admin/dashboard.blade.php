@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
 <div class="container">
@@ -8,7 +8,7 @@
     <div class="row justify-content-center">
         <div class="col">
             <div class="card">
-                <div class="card-header">{{ __('User Dashboard') }}</div>
+                <div class="card-header">{{ Auth::user()->name }}</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -17,7 +17,8 @@
                     </div>
                     @endif
 
-                    <p class="m-0">Hi, {{Auth::user()->name}} and welcome to your dashboard</p>
+                    <p class="m-0">Welcome to your dashboard click on the button below to be redirected to your profile, otherwise you can reach your projects through the navbar.</p>
+                    <a href="{{route('profile.edit')}}" class="btn btn-outline-danger d-inline-block ms-auto mt-5">Go to Profile</a>
                 </div>
             </div>
         </div>

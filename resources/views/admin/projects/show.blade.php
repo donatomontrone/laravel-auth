@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 @section('title', $project->name)
 @section('content')
 <div class="container">
