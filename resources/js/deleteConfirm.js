@@ -6,23 +6,17 @@ deleteEl.forEach((formDelete) => {
     event.preventDefault();
     const doubleconfirm = event.target.classList.contains('double-confirm');
     Swal.fire({
-      title: 'Confirm request!',
-      text: "You are deleting your project.",
+      title: 'Confirm request',
+      text: "You are trying to delete a project.",
       icon: 'warning',
+      iconColor: '#DC3445',
       showCancelButton: true,
       confirmButtonColor: '#28A745',
       cancelButtonColor: '#6C757D',
       cancelButtonText: '<i class="fa-solid fa-arrow-left"></i> Back',
-      confirmButtonText: '<i class="fa-solid fa-thumbs-up"></i> Yes!',
-      showClass: {
-        popup: 'animate__animated animate__fadeInDown'
-      },
-      hideClass: {
-        popup: 'animate__animated animate__fadeOutUp'
-      }
+      confirmButtonText: '<i class="fa-solid fa-thumbs-up"></i> Ok!',
     }).then((result) => {
       if (result.value) {
-
         // if double confirm
         if (doubleconfirm) {
 
@@ -31,12 +25,7 @@ deleteEl.forEach((formDelete) => {
             html: "Please type <b>DELETE</b> to confirm",
             input: 'text',
             icon: 'error',
-            showClass: {
-              popup: 'animate__animated animate__fadeInDown'
-            },
-            hideClass: {
-              popup: 'animate__animated animate__fadeOutUp'
-            },
+            iconColor: '#981100',
             inputPlaceholder: 'DELETE',
             showCancelButton: true,
             confirmButtonColor: '#DC3445',
@@ -55,12 +44,7 @@ deleteEl.forEach((formDelete) => {
         } else {
           this.submit();
         }
-
-
       }
     });
-
-
   });
-
 });
