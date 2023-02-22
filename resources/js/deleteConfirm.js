@@ -6,14 +6,14 @@ deleteEl.forEach((formDelete) => {
     event.preventDefault();
     const doubleconfirm = event.target.classList.contains('double-confirm');
     Swal.fire({
-      title: 'Are you sure ?',
-      text: "Please confirm your request !",
+      title: 'Confirm request!',
+      text: "You are deleting your project.",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#28A745',
-      cancelButtonColor: '#DC3445',
+      cancelButtonColor: '#6C757D',
       cancelButtonText: '<i class="fa-solid fa-arrow-left"></i> Back',
-      confirmButtonText: 'Yes! <i class="fa-solid fa-thumbs-up"></i>',
+      confirmButtonText: '<i class="fa-solid fa-thumbs-up"></i> Yes!',
       showClass: {
         popup: 'animate__animated animate__fadeInDown'
       },
@@ -27,8 +27,8 @@ deleteEl.forEach((formDelete) => {
         if (doubleconfirm) {
 
           Swal.fire({
-            title: 'Confirm request',
-            html: "Please type <b>DELETE</b>",
+            title: 'This action is irreversible',
+            html: "Please type <b>DELETE</b> to confirm",
             input: 'text',
             icon: 'error',
             showClass: {
@@ -39,8 +39,10 @@ deleteEl.forEach((formDelete) => {
             },
             inputPlaceholder: 'DELETE',
             showCancelButton: true,
-            confirmButtonText: 'Confirm',
-            cancelButtonText: 'Cancel',
+            confirmButtonColor: '#DC3445',
+            cancelButtonColor: '#6C757D',
+            confirmButtonText: 'Confirm <i class="fa-solid fa-trash"></i>',
+            cancelButtonText: 'Cancel <i class="fa-solid fa-xmark"></i>',
             showLoaderOnConfirm: true,
             allowOutsideClick: () => !Swal.isLoading(),
             preConfirm: (txt) => {

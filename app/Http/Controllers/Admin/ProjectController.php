@@ -134,7 +134,7 @@ class ProjectController extends Controller
     {
         $project->delete();
 
-        return redirect()->route('admin.projects.index')->with('info-message', 'Your project has been trashed!')->with('alert', 'danger');
+        return redirect()->route('admin.projects.index')->with('info-message', "$project->name has been trashed!")->with('alert', 'warning');
     }
 
 
@@ -149,5 +149,23 @@ class ProjectController extends Controller
 
         Project::where('id', $id)->withTrashed()->forceDelete();
         return redirect()->route('admin.trash')->with('info-message', "Your project is permanently deleted")->with('alert', 'danger');
+    }
+
+    public function restore($id)
+    {
+        Project::where('id', $id)->withTrashed()->restore();
+        return redirect()->route('admin.projects.index')->with('info-message', "The project has been restored successfully!")->with('alert', 'success');
+    }
+
+
+    /**
+     * Restore all archived books
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function restoreAll()
+    {
+        Project::onlyTrashed()->restore();
+        return redirect()->route('admin.trash')->with('info-message', "All projects have been restored")->with('alert', 'success');
     }
 }

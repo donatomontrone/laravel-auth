@@ -21,7 +21,14 @@
               <h2 class="m-0">Trash</h2>
             </div>
             <div class="col-6 text-end">
-              <a href="#" class="btn btn-outline-dark"><i class="fa-solid fa-boxes-packing"></i> Restore</a>
+              @if (count($projects))
+              <form class="d-inline" action="{{route('admin.restore-all')}}" method="POST" >
+                  @csrf
+                  <button type="submit" class="btn btn-primary" title="restore all"><i class="fa-solid fa-boxes-packing"></i> Restore</button>
+              @else
+                  <button disabled="disabled" class="btn btn-secondary">Restore</button>
+              </form>
+              @endif  
             </div>
           </div>
         </div>
@@ -50,6 +57,10 @@
                   </td>
                   <td>{{$project->language_used}}</td>
                   <td class="text-center">
+                    <form class="d-inline" action="{{route('admin.restore', $project)}}" method="POST">
+                      @csrf
+                      <button type="submit" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-trash-arrow-up"></i></button>
+                    </form>
                     <form action="{{route('admin.forcedelete', $project->id)}}" method="POST" class="d-inline delete double-confirm" data-element-name="{{$project->name}}">
                       @csrf
                       @method('DELETE')
@@ -59,7 +70,7 @@
                 </tr>
                 @empty
                     <tr>
-                      <td colspan="6" class="text-center">No item </td>
+                      <td colspan="6" class="text-center">No item in trash</td>
                     </tr>
                 @endforelse
               </tbody>
