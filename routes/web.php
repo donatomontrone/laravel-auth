@@ -25,10 +25,11 @@ Route::get('/', function () {
 Route::get('/index', [GuestProjectController::class, 'index'])->name('guests.index');
 
 //Qui posso inserire tutte le rotte solo per gli utenti che sono autenticati e verificati
-Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group( function(){
+Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('/projects', AdminProjectController::class);
-
+    Route::get('/trash', [AdminProjectController::class, 'trash'])->name('trash');
+    Route::delete('/{project}/forcedelete', [AdminProjectController::class, 'forceDelete'])->name('forcedelete');
 });
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -36,4 +37,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

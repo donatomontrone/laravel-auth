@@ -31,15 +31,15 @@ class ProjectController extends Controller
         'complexity.required' => 'Inserisci il livello di complessità.',
         'complexity.min' => 'Il numero deve essere compreso tra 1 e 5',
         'complexity.max' => 'Il numero deve essere compreso tra 1 e 5',
-        'language_used.required' => 'Inserisci il linguaggio di programmazione usato.',     
+        'language_used.required' => 'Inserisci il linguaggio di programmazione usato.',
         'language_used.min' => 'Il linguaggio è troppo corto.',
         'language_used.max' => 'Il linguaggio è troppo lungo.',
         'github_url.required' => 'Inserisci l\'url della repository GitHub.',
         'github_url.url' => 'Url non valido.',
     ];
-    
-    
-    
+
+
+
     /**
      * Display a listing of the resource.
      *
@@ -48,7 +48,9 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::paginate(10);
-        return view('admin.projects.index', compact('projects'));
+
+        $trashed = Project::onlyTrashed()->get()->count();
+        return view('admin.projects.index', compact('projects', 'trashed'));
     }
 
     /**
@@ -70,14 +72,15 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate(
-        $this->rules, $this->messages
+            $this->rules,
+            $this->messages
         );
         $data['slug'] = Str::slug($data['name']);
         $newProject = new Project();
         $newProject->fill($data);
         $newProject->save();
 
-        return redirect()->route('admin.projects.show', $newProject->id)->with('info-message' , "'$newProject->name' was created successfully!")->with('alert', 'success');
+        return redirect()->route('admin.projects.show', $newProject->id)->with('info-message', "'$newProject->name' was created successfully!")->with('alert', 'success');
     }
 
     /**
@@ -117,9 +120,9 @@ class ProjectController extends Controller
         $data = $request->validate($newRules, $this->messages);
 
         $project->update($data);
-    
-            return redirect()->route('admin.projects.show', compact('project'))->with('info-message' , "'$project->name' was updated successfully!")->with('alert', 'success');
-        }
+
+        return redirect()->route('admin.projects.show', compact('project'))->with('info-message', "'$project->name' was updated successfully!")->with('alert', 'success');
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -132,5 +135,19 @@ class ProjectController extends Controller
         $project->delete();
 
         return redirect()->route('admin.projects.index')->with('info-message', 'Your project has been trashed!')->with('alert', 'danger');
+    }
+
+
+    public function trash()
+    {
+        $projects = Project::onlyTrashed()->get();
+        return view('admin.projects.trash', compact('projects'));
+    }
+
+    public function forceDelete($id)
+    {
+
+        Project::where('id', $id)->withTrashed()->forceDelete();
+        return redirect()->route('admin.trash')->with('info-message', "Your project is permanently deleted")->with('alert', 'danger');
     }
 }

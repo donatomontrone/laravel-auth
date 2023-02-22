@@ -1,11 +1,9 @@
 @extends('layouts.app')
 @section('title', 'Portfolio | Index')
-
 @section('alert')
 <link href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
 @endsection
-
 @section('content')
 <div class="container">
     <div class="row">
@@ -20,13 +18,10 @@
         <div class="card-header">
           <div class="row">
             <div class="col-6">
-              <h2 class="m-0">Projects</h2>
+              <h2 class="m-0">Trash</h2>
             </div>
             <div class="col-6 text-end">
-
-              <a href="{{ route('admin.trash') }} "class="btn btn-outline-danger">
-                @if ($trashed)<i class="fa-solid fa-trash"></i><b> {{$trashed}}</b> item/s in trash @else <i class="fa-solid fa-trash"></i> Trash @endif</a>
-              <a href="{{route('admin.projects.create')}}" class="btn btn-outline-dark"><i class="fa-solid fa-plus"></i> Add Project</a>
+              <a href="#" class="btn btn-outline-dark"><i class="fa-solid fa-boxes-packing"></i> Restore</a>
             </div>
           </div>
         </div>
@@ -55,9 +50,7 @@
                   </td>
                   <td>{{$project->language_used}}</td>
                   <td class="text-center">
-                    <a href="{{route('admin.projects.show', $project->id)}}" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-eye"></i></a>
-                    <a href="{{route('admin.projects.edit', $project->id)}}" class="btn btn-outline-success btn-sm"><i class="fa-solid fa-edit"></i></a>
-                    <form action="{{route('admin.projects.destroy', $project->id)}}" method="POST" class="d-inline delete" data-element-name="{{$project->name}}">
+                    <form action="{{route('admin.forcedelete', $project->id)}}" method="POST" class="d-inline delete double-confirm" data-element-name="{{$project->name}}">
                       @csrf
                       @method('DELETE')
                       <button type="submit" class="btn btn-outline-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
@@ -66,23 +59,22 @@
                 </tr>
                 @empty
                     <tr>
-                      <td colspan="6">No item </td>
+                      <td colspan="6" class="text-center">No item </td>
                     </tr>
                 @endforelse
               </tbody>
             </table>
             
           </div>
-          <div class="card-footer">
-            <div class="m-0">
-              {{$projects->links()}}
+          <div class="card-footer text-end">
+            <div class="m-0 ">
+              <a href="{{route('admin.projects.index')}}" class="btn btn-outline-secondary"><i class="fa-solid fa-arrow-left"></i> Back</a>
             </div>
           </div>
         </div>
       </div>
 </div>
 @endsection
-
 @section('scripts')
     @vite('resources/js/deleteConfirm.js')
 @endsection

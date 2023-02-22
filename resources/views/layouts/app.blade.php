@@ -10,6 +10,7 @@
         <!-- Fonts -->
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+        @yield('alert')
         <!-- Usando Vite -->
         @vite(['resources/js/app.js'])
     </head>
@@ -20,6 +21,7 @@
                 @yield('content')
             </main>
         </div>
+        @yield('scripts')
     </body>
 
 </html>
