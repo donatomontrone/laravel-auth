@@ -52,5 +52,5 @@
 </div>
 @endsection
 @section('scripts')
-    @vite('resources/js/deleteCOnfirm.js')
+    @vite('resources/js/deleteConfirm.js')
 @endsection
