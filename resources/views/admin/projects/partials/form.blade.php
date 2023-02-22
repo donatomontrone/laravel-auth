@@ -1,5 +1,5 @@
 
-<form action="{{ route($route, $project->id) }}" method="POST" class="form-floating">
+<form action="{{ route($route, $project->slug) }}" method="POST" class="form-floating">
     @csrf
     @method($method)
     <div class="row mb-3">

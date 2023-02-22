@@ -10,5 +10,13 @@ class Project extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
     protected $fillable = ['name', 'slug', 'publication_date', 'preview', 'complexity', 'language_used', 'github_url'];
+    /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
 }
