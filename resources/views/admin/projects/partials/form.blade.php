@@ -19,11 +19,11 @@
         <div class="col-md">
             <div class="form-floating">
                 <select name="complexity" id="complexitySelect" class="form-select">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
+                    <option value="1" {{ old('complexity', $project->complexity) == '1' ? 'selected' : '' }}>1</option>
+                    <option value="2" {{ old('complexity', $project->complexity) == '2' ? 'selected' : '' }}>2</option>
+                    <option value="3" {{ old('complexity', $project->complexity) == '3' ? 'selected' : '' }}>3</option>
+                    <option value="4" {{ old('complexity', $project->complexity) == '4' ? 'selected' : '' }}>4</option>
+                    <option value="5" {{ old('complexity', $project->complexity) == '5' ? 'selected' : '' }}>5</option>
                 </select>
                 <label for="complexitySelect">Project Complexity</label>
             </div>
