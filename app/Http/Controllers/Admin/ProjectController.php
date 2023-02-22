@@ -45,9 +45,15 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $projects = Project::paginate(10);
+
+        $sort = $request->sort ?? '';
+        if ($sort) {
+            $projects = Project::orderBy($sort)->paginate(10);
+        } else {
+            $projects = Project::paginate(10);
+        }
 
         $trashed = Project::onlyTrashed()->get()->count();
         return view('admin.projects.index', compact('projects', 'trashed'));
@@ -60,6 +66,7 @@ class ProjectController extends Controller
      */
     public function create(Project $project)
     {
+
         return view('admin.projects.create', compact('project'));
     }
 

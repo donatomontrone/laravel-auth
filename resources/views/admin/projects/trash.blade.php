@@ -41,7 +41,7 @@
                   <th scope="col">Publication Date</th>
                   <th scope="col">Complexity</th>
                   <th scope="col">Language Used</th>
-                  <th scope="col">Actions</th>
+                  <th scope="col" class="text-center">Actions</th>
                 </tr>
               </thead>
               <tbody>

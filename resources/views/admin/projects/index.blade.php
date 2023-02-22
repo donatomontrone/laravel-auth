@@ -34,12 +34,12 @@
           <table class="table mb-0">
               <thead class="table-dark lh-lg">
                 <tr>
-                  <th scope="col">ID</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Publication Date</th>
-                  <th scope="col">Complexity</th>
-                  <th scope="col">Language Used</th>
-                  <th scope="col">Actions</th>
+                  <th scope="col">ID <a href="{{route('admin.projects.index', 'sort=id')}}" class="text-white"><i class="fa-solid fa-sort-down"></i></a></th>
+                  <th scope="col" >Name <a href="{{route('admin.projects.index', 'sort=name')}}" class="text-white d-inline-block"><i class="fa-solid fa-sort-down"></i></a></th>
+                  <th scope="col">Publication Date <a href="{{route('admin.projects.index', 'sort=publication_date')}}" class="text-white d-inline-block"><i class="fa-solid fa-sort-down"></i></a></th>
+                  <th scope="col">Complexity <a href="{{route('admin.projects.index', 'sort=complexity')}}" class="text-white d-inline-block"><i class="fa-solid fa-sort-down"></i></a></th>
+                  <th scope="col">Language Used <a href="{{route('admin.projects.index', 'sort=language_used')}}" class="text-white d-inline-block"><i class="fa-solid fa-sort-down"></i></a></th>
+                  <th scope="col" class="text-center">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -75,7 +75,7 @@
           </div>
           <div class="card-footer">
             <div class="m-0">
-              {{$projects->links()}}
+              {{ $projects->appends(['sort' => request('sort')])->links() }}
             </div>
           </div>
         </div>
