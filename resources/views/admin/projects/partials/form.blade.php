@@ -81,6 +81,10 @@
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-outline-primary"><i class="fa-regular fa-paper-plane"></i> Submit</button>
+        <div class="buttons d-flex justify-content-between">
+            <button type="submit" class="btn btn-outline-primary"><i class="fa-regular fa-paper-plane"></i> Submit</button>
+            <a href="{{route('admin.projects.index')}}" class="btn btn-outline-secondary"><i class="fa-solid fa-arrow-left"></i> Back</a>
+        </div>
+
     </div>
 </form>

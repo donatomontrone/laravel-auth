@@ -29,8 +29,12 @@
                         <a href="{{route('admin.projects.index')}}" class="btn btn-outline-primary"><i class="fa-solid fa-caret-left"></i> Prev</a>
                         <div class="center-buttons">
                             <a href="{{route('admin.projects.index')}}" class="btn btn-outline-secondary"><i class="fa-solid fa-arrow-left"></i> Back</a>
-                            <a href="#" class="btn btn-outline-warning"><i class="fa-solid fa-edit"></i> Edit</a>
-                            <a href="#" class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i> Delete</a>
+                            <a href="{{route('admin.projects.edit', $project->id)}}" class="btn btn-outline-warning"><i class="fa-solid fa-edit"></i> Edit</a>
+                            <form action="{{route('admin.projects.destroy', $project->id)}}" method="POST" class="d-inline delete" data-element-name="{{$project->name}}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i> Delete</button>
+                            </form>
                         </div>
                         <a href="{{route('admin.projects.index')}}" class="btn btn-outline-primary">Next <i class="fa-solid fa-caret-right"></i> </a>
                     </div>

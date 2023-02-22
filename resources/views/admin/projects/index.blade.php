@@ -50,7 +50,9 @@
                   <td class="text-center">
                     <a href="{{route('admin.projects.show', $project->id)}}" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-eye"></i></a>
                     <a href="{{route('admin.projects.edit', $project->id)}}" class="btn btn-outline-success btn-sm"><i class="fa-solid fa-edit"></i></a>
-                    <form action="#" method="post" class="d-inline">
+                    <form action="{{route('admin.projects.destroy', $project->id)}}" method="POST" class="d-inline delete" data-element-name="{{$project->name}}">
+                      @csrf
+                      @method('DELETE')
                       <button type="submit" class="btn btn-outline-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
                     </form>
                   </td>
