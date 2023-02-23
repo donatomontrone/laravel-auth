@@ -14,7 +14,7 @@
             </div>
         </div>
         @endif
-        <div class="col-6">
+        <div class="col-md-6 col-sm-12">
             <div class="card text-center">
                 <div class="card-header d-flex justify-content-between">
                     <p class="d-inline m-0">{{$project->language_used}}</p>
@@ -26,7 +26,7 @@
                 <div class="card-body">
                     <h5 class="card-title">{{$project->name}}</h5>
                     <div class="card-img">
-                        <img src="{{$project->preview}}" alt="preview of {{$project->name}}">
+                        <img src="{{$project->preview}}" alt="preview of {{$project->name}}" class="img-fluid">
                     </div>
                     <p class="card-body">GitHub Link : <a href="{{$project->github_url}}">{{$project->github_url}}</a></p>
                         <div class="center-buttons">

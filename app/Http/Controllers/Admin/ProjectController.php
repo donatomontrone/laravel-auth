@@ -151,17 +151,18 @@ class ProjectController extends Controller
         return view('admin.projects.trash', compact('projects'));
     }
 
-    public function forceDelete($id)
+    public function forceDelete($slug)
     {
 
-        Project::where('id', $id)->withTrashed()->forceDelete();
-        return redirect()->route('admin.trash')->with('info-message', "Your project is permanently deleted")->with('alert', 'danger');
+        Project::where('slug', $slug)->withTrashed()->forceDelete();
+        return redirect()->route('admin.trash')->with('info-message', "Your project is permanently deleted!")->with('alert', 'danger');
     }
 
-    public function restore($id)
+    public function restore($slug)
     {
-        Project::where('id', $id)->withTrashed()->restore();
-        return redirect()->route('admin.projects.index')->with('info-message', "The project has been restored successfully!")->with('alert', 'success');
+        // Project::where('slug', $slug)->withTrashed()->restore();
+        Project::onlyTrashed()->where('slug', $slug)->restore();
+        return redirect()->route('admin.trash')->with('info-message', "The project has been restored successfully!")->with('alert', 'success');
     }
 
 
@@ -173,6 +174,6 @@ class ProjectController extends Controller
     public function restoreAll()
     {
         Project::onlyTrashed()->restore();
-        return redirect()->route('admin.trash')->with('info-message', "All projects have been restored")->with('alert', 'success');
+        return redirect()->route('admin.trash')->with('info-message', "All projects have been restored!")->with('alert', 'success');
     }
 }
