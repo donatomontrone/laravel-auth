@@ -57,12 +57,12 @@
                   </td>
                   <td>{{$project->language_used}}</td>
                   <td class="text-center">
-                    <form  action="{{route('admin.restore', $project->slug)}}" method="POST" class="d-inline" data-element-name="{{$project->name}}" >
+                    <form  action="{{route('admin.restore', $project)}}" method="POST" class="d-inline" data-element-name="{{$project->name}}" >
                       @csrf
                       @method('POST')
                       <button type="submit" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-trash-arrow-up"></i></button>
                     </form>
-                    <form action="{{route('admin.forcedelete', $project->id)}}" method="POST" class="d-inline delete double-confirm" data-element-name="{{$project->name}}">
+                    <form action="{{route('admin.force-delete', $project)}}" method="POST" class="d-inline delete double-confirm" data-element-name="{{$project->name}}">
                       @csrf
                       @method('DELETE')
                       <button type="submit" class="btn btn-outline-danger btn-sm"><i class="fa-solid fa-trash"></i></button>

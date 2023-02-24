@@ -27,13 +27,13 @@ class ProjectsTableSeeder extends Seeder
         // $table->text('github_url');
         // $table->timestamps();
 
-        for ($i=0; $i < 20 ; $i++) { 
+        for ($i = 0; $i < 20; $i++) {
             $newProject = new Project();
             $newProject->name = $faker->sentence(3);
             $newProject->slug = Str::slug($newProject->name);
             $newProject->publication_date = $faker->date('Y-m-d', 'now');
-            $newProject->preview = $faker->imageUrl(360, 360, 'animals', true, 'dogs', true, 'jpg');
-            $newProject->complexity = $faker->numberBetween(1,5);
+            $newProject->preview = $faker->unique()->imageUrl();
+            $newProject->complexity = $faker->numberBetween(1, 5);
             $newProject->language_used = $faker->randomElement(['HTML', 'HTML/CSS', 'JS', 'Vue.Js', 'Php', 'Laravel']);
             $newProject->github_url = $faker->url();
             $newProject->save();

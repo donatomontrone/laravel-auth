@@ -19,4 +19,8 @@ class Project extends Model
     {
         return 'slug';
     }
+    public function isAnUrl()
+    {
+        return filter_var($this->preview, FILTER_VALIDATE_URL);
+    }
 }

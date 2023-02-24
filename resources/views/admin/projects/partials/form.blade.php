@@ -1,5 +1,5 @@
 
-<form action="{{ route($route, $project->slug) }}" method="POST" class="form-floating">
+<form action="{{ route($route, $project->slug) }}" method="POST" class="form-floating"  enctype="multipart/form-data">
     @csrf
     @method($method)
     <div class="row mb-3">
@@ -34,9 +34,9 @@
     <div class="row g-3">
                         {{-- Preview Image --}}
         <div class="col-12">
-            <div class="form-floating">
-                <textarea class="form-control @error('preview') is-invalid @enderror" placeholder="Image Preview" id="inputPreview" name="preview">{{  old('preview',  $project->preview) }}</textarea>
-                <label for="inputPreview">Insert a Preview Image</label>
+            <div class="">
+                <label for="inputPreview">Insert a Preview Project Image</label>
+                <input type="file" class="form-control @error('preview') is-invalid @enderror" placeholder="Image Preview" id="inputPreview" name="preview" value="{{  old('preview',  $project->preview) }}">
                 <div id="inputPreview" class="invalid-feedback">
                     @error('preview')
                         {{$message}}

@@ -26,7 +26,20 @@
                 <div class="card-body">
                     <h5 class="card-title">{{$project->name}}</h5>
                     <div class="card-img">
-                        <img src="{{$project->preview}}" alt="preview of {{$project->name}}" class="img-fluid">
+                        {{-- <div class="card-image mb-4">
+                            @if ( str_starts_with($post->image, 'http'))
+                                <img src="{{ $post->image }}"
+                            @else
+                                <img src="{{ asset('storage/' . $post->image ) }}"
+                            @endif
+                                alt="{{ $post->title }} image" class="img-fluid">
+                        </div> --}}
+                        @if (str_starts_with($project->preview, 'http'))
+                        <img src=" {{$project->preview}}"
+                        @else
+                        <img src="{{asset('storage/'. $project->preview)}}"
+                        @endif
+                        alt="preview of {{$project->name}}" class="img-fluid">
                     </div>
                     <p class="card-body">GitHub Link : <a href="{{$project->github_url}}">{{$project->github_url}}</a></p>
                         <div class="center-buttons">

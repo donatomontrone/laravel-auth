@@ -7,16 +7,18 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
     protected $rules = [
         'name' => 'required|min:3|max:100|string|unique:projects',
         'publication_date' => 'required',
-        'preview' => 'required|url|min:10',
+        'preview' => 'required|image|min:1|max:300',
         'complexity' => 'required|min:1|max:5',
         'language_used' => 'required|min:2|max:100|string',
         'github_url' => 'required|url|min:10',
+        'slug' => 'unique'
     ];
 
     protected $messages = [
@@ -26,8 +28,9 @@ class ProjectController extends Controller
         'name.unique' => 'Il nome del progetto deve essere UNICO',
         'publication_date.required' => 'Inserisci la data di pubblicazione del progetto.',
         'preview.required' => 'Inserisci l\'url della copertina.',
-        'preview.url' => 'Url troppo corto o non valido.',
+        'preview.image' => 'Carica una immagine o inserisci il suo URL.',
         'preview.min' => 'Url troppo corto o non valido.',
+        'preview.max' => 'Url troppo lungo o non valido.',
         'complexity.required' => 'Inserisci il livello di complessità.',
         'complexity.min' => 'Il numero deve essere compreso tra 1 e 5',
         'complexity.max' => 'Il numero deve essere compreso tra 1 e 5',
@@ -83,11 +86,12 @@ class ProjectController extends Controller
             $this->messages
         );
         $data['slug'] = Str::slug($data['name']);
+        $data['preview'] =  Storage::put('imgs/', $data['preview']);
         $newProject = new Project();
         $newProject->fill($data);
         $newProject->save();
 
-        return redirect()->route('admin.projects.show', $newProject->id)->with('info-message', "'$newProject->name' was created successfully!")->with('alert', 'success');
+        return redirect()->route('admin.projects.show', $newProject->slug)->with('info-message', "'$newProject->name' was created successfully!")->with('alert', 'success');
     }
 
     /**
@@ -126,6 +130,13 @@ class ProjectController extends Controller
 
         $data = $request->validate($newRules, $this->messages);
 
+        if ($request->hasFile('preview')) {
+            if (!$project->isAnUrl()) {
+                Storage::delete($project->preview);
+            }
+            $data['preview'] =  Storage::put('imgs/', $data['preview']);
+        }
+
         $project->update($data);
 
         return redirect()->route('admin.projects.show', compact('project'))->with('info-message', "'$project->name' was updated successfully!")->with('alert', 'success');
@@ -151,23 +162,22 @@ class ProjectController extends Controller
         return view('admin.projects.trash', compact('projects'));
     }
 
-    public function forceDelete($slug)
+    public function forceDelete(Project $project)
     {
-
-        Project::where('slug', $slug)->withTrashed()->forceDelete();
-        return redirect()->route('admin.trash')->with('info-message', "Your project is permanently deleted!")->with('alert', 'danger');
+        Project::where('slug', $project->slug)->withTrashed()->forceDelete();
+        return redirect()->route('admin.trash')->with('info-message', "'$project->name' is permanently deleted!")->with('alert', 'danger');
     }
 
-    public function restore($slug)
+    public function restore(Project $project)
     {
         // Project::where('slug', $slug)->withTrashed()->restore();
-        Project::onlyTrashed()->where('slug', $slug)->restore();
+        Project::onlyTrashed()->where('slug', $project->slug)->restore();
         return redirect()->route('admin.trash')->with('info-message', "The project has been restored successfully!")->with('alert', 'success');
     }
 
 
     /**
-     * Restore all archived books
+     * Restore all archived projects
      * 
      * @return \Illuminate\Http\Response
      */
