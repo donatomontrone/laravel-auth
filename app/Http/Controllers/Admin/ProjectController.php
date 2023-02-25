@@ -162,16 +162,21 @@ class ProjectController extends Controller
         return view('admin.projects.trash', compact('projects'));
     }
 
-    public function forceDelete(Project $project)
+    public function forceDelete($slug)
     {
-        Project::where('slug', $project->slug)->withTrashed()->forceDelete();
+        $project = Project::withTrashed()->where('slug', $slug)->first();
+        if (!$project->isAnUrl()) {
+            Storage::delete($project->preview);
+        }
+
+        $project->forceDelete();
         return redirect()->route('admin.trash')->with('info-message', "'$project->name' is permanently deleted!")->with('alert', 'danger');
     }
 
-    public function restore(Project $project)
+    public function restore($slug)
     {
         // Project::where('slug', $slug)->withTrashed()->restore();
-        Project::onlyTrashed()->where('slug', $project->slug)->restore();
+        Project::onlyTrashed()->where('slug', $slug)->restore();
         return redirect()->route('admin.trash')->with('info-message', "The project has been restored successfully!")->with('alert', 'success');
     }
 
